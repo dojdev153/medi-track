@@ -1,0 +1,67 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Patients | MediTrack{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">PATIENT MANAGEMENT</p>
+        <h1>Patient Records</h1>
+        <p>View and manage registered patients.</p>
+    </div>
+
+    <a href="{% url 'patient_create' %}" class="btn btn-primary">
+        + Add Patient
+    </a>
+</section>
+
+<section class="card">
+    <div class="card-heading">
+        <h2>All Patients</h2>
+        <span>{{ patients|length }} patient(s)</span>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>
+                        {{ patient.first_name }} {{ patient.last_name }}
+                    </td>
+                    <td>{{ patient.phone_number }}</td>
+                    <td>{{ patient.email|default:"—" }}</td>
+                    <td>{{ patient.date_of_birth|date:"d M Y" }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td class="actions">
+                        <a href="{% url 'patient_update' patient.pk %}"
+                           class="btn btn-small btn-edit">Edit</a>
+
+                        <a href="{% url 'patient_delete' patient.pk %}"
+                           class="btn btn-small btn-delete">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="empty-state">
+                        No patient records yet. Add your first patient.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

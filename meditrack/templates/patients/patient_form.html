@@ -1,0 +1,55 @@
+
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Patient | MediTrack{% endblock %}
+
+{% block content %}
+<section class="form-page">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">PATIENT MANAGEMENT</p>
+            <h1>{{ action }} Patient</h1>
+            <p>Enter the patient's information below.</p>
+        </div>
+    </div>
+
+    <section class="card form-card">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    Save Patient
+                </button>
+
+                <a href="{% url 'patient_list' %}"
+                   class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </section>
+</section>
+{% endblock %}

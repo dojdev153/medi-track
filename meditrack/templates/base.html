@@ -1,0 +1,36 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}MediTrack{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
+
+</head>
+<body>
+    <header class="navbar">
+        <a href="{% url 'patient_list' %}" class="brand">
+            <img src="{% static 'images/meditrack-logo.svg' %}"
+                 alt="MediTrack logo">
+            <span>MediTrack</span>
+        </a>
+
+        <nav>
+            <a href="{% url 'patient_list' %}">Patients</a>
+            <a href="{% url 'patient_create' %}">Add Patient</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; {% now "Y" %} MediTrack. Simple medical record management.</p>
+    </footer>
+</body>
+</html>
